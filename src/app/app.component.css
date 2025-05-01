@@ -1,0 +1,23 @@
+.appName{
+    font-size: 36px;
+    color: aliceblue;
+    border: 1px solid black;
+    /* margin: 14px; */
+    padding: 14px;
+    border-radius: 8px;
+    background: dodgerblue;
+}
+
+.master-div{
+    margin: 24px;
+}
+
+.database-main-div{
+   margin-top: 28px;
+}
+
+.empty-table-msg{
+    margin: 72px;
+    text-align: center; 
+    padding: 10px;
+}

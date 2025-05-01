@@ -1,2 +1,149 @@
-<button type="button" class="btn btn-primary">Base class</button>
-<router-outlet />
+
+<div class="master-div">
+    <h1 class="appName">
+        Employee Database App
+    </h1>
+    <router-outlet />
+    <div class="row database-main-div">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h6>Employee List</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>Sr No</th>
+                                        <th>Name</th>
+                                        <th>Contact No</th>
+                                        <th>E-mail Id</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                @if (employeeList.length == 0) {
+                                <tbody>
+    
+                                    <!-- <tr class="text-center "> -->
+                                         <td colspan="5" >
+                                            <div class="empty-table-msg">
+                                            Currently, No employee records are available. Add records using the form!
+                                              
+                                            </div>
+                                          </td>
+                                        <!-- <td>
+                                            Currently, No employee records are available. Add records using the form!
+                                        </td> -->
+                                        
+    
+                                    <!-- </tr> -->
+                                </tbody>
+                                }
+                                @else {
+                                <tbody>
+                                    @for (item of employeeList; track $index) {
+                                    <tr>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.name}}</td>
+                                        <td>{{item.contactNo}}</td>
+                                        <td>{{item.emailID}}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-primary" (click)="onEdit(item)">Edit</button>
+                                            <button class="btn btn-danger mx-2"
+                                                (click)="onDelete(item.empID)">Delete</button>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                                }
+    
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header bg-success">
+                    Add / Edit Employee Data
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="employeeForm">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="">Name</label>
+                                <input type="text" class="form-control" formControlName="name">
+                                <div class="text-danger">
+                                    @if(employeeForm.controls['name'].touched){
+                                    @if (employeeForm.controls['name'].errors?.['required']){
+                                    <span> Name is required!</span>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="">E-mail Id</label>
+                                <input type="text" class="form-control" formControlName="emailID">
+                            </div>
+                            <div class="col-6">
+                                <label for="">Contact No</label>
+                                <input type="text" class="form-control" formControlName="contactNo">
+                                <div class="text-danger">
+                                    @if(employeeForm.controls['contactNo'].touched){
+                                    @if (employeeForm.controls['contactNo'].errors?.['required']){
+                                    <span> Contact Number is required!</span>
+                                    }
+                                    @if (employeeForm.controls['contactNo'].errors?.['minlength']){
+                                    <span> Please enter a valid number!</span>
+                                    }
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="">City</label>
+                                <input type="text" class="form-control" formControlName="city">
+                            </div>
+                            <div class="col-6">
+                                <label for="">State</label>
+                                <input type="text" class="form-control" formControlName="state">
+                            </div>
+                            <div class="col-6">
+                                <label for="">Pin Code</label>
+                                <input type="text" class="form-control" formControlName="pinCode">
+                            </div>
+                            <div class="col-12">
+                                <label for="">Address</label>
+                                <textarea type="text" class="form-control" formControlName="address"></textarea>
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="col-6 text-center">
+                                <button class="btn btn-secondary" (click)="resetData()">
+                                    Reset
+                                </button>
+                            </div>
+                            <div class="col-6 text-center">
+                                @if(employeeForm.controls['empID'].value == '1'){
+                                <button class="btn btn-success" [disabled]="employeeForm.invalid" type="submit"
+                                    (click)="onSave()">
+                                    Save Details
+                                </button>
+                                } @else {
+                                <button class="btn btn-success" [disabled]="employeeForm.invalid" type="submit"
+                                    (click)="onUpdate()">
+                                    Update Details
+                                </button>
+                                }
+    
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
